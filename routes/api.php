@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ApiTokenController;
+use App\Http\Controllers\StatusController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,3 +23,13 @@ Route::post('/auth/register', [ApiTokenController::class, 'register']);
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
+Route::middleware('auth:sanctum')->group(function(){
+    Route::prefix('/user')->group(function(){
+        Route::delete('delete/{id}', [UserController::class, 'destroy']);
+
+    });
+    Route::prefix('status')->group(function(){
+        Route::get('/{id}', [StatusController::class, 'show']);
+    });
+});
