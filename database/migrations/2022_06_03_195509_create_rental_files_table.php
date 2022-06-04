@@ -22,7 +22,7 @@ class CreateRentalFilesTable extends Migration
             $table->string('description');
             $table->string('city');
             $table->float('price');
-            $table->string('images_url');
+            $table->string('images_url')->nullable();
         });
     }
 
