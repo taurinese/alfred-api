@@ -26,7 +26,24 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        // Récupération de l'info
+
+        $user = User::find($id);
+
+        if(!$user){
+            $response = [
+                'success' => false
+            ];
+        }
+        else{
+            $response = [
+                'success' => true,
+                'user' => $user
+            ];
+        }
+
+        // Retour
+        return response()->json($response, $response['success'] ? 200 : 404);
     }
 
     /**
@@ -38,7 +55,22 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Validation
+        /* $request->validate([
+
+        ]); */
+        // Changement des data
+
+        // Récupération du nouveau user
+
+        $user = User::find($id);
+
+        // Retour
+
+        return response()->json([
+            'success' => true,
+            'user' => $user
+        ], 200);
     }
 
     /**
@@ -54,8 +86,8 @@ class UserController extends Controller
                 'success' => true
             ]);
         }
-        return response()->json([
-            'success' => false
-        ]);
+        else{
+            return response()->json([], 204);
+        }
     }
 }

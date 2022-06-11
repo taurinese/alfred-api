@@ -27,6 +27,8 @@ Route::post('/auth/register', [ApiTokenController::class, 'register']);
 Route::middleware('auth:sanctum')->group(function(){
     Route::prefix('/user')->group(function(){
         Route::delete('delete/{id}', [UserController::class, 'destroy']);
+        Route::get('{id}', [UserController::class, 'show']);
+        Route::put('{id}', [UserController::class, 'update']);
 
     });
     Route::prefix('status')->group(function(){
