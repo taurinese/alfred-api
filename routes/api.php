@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ApiTokenController;
+use App\Http\Controllers\FieldController;
+use App\Http\Controllers\RentalFileController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -26,12 +28,30 @@ Route::post('/auth/register', [ApiTokenController::class, 'register']);
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::prefix('/user')->group(function(){
-        Route::delete('delete/{id}', [UserController::class, 'destroy']);
-        Route::get('{id}', [UserController::class, 'show']);
-        Route::put('{id}', [UserController::class, 'update']);
+        Route::delete('/delete/{id}', [UserController::class, 'destroy']);
+        Route::get('/{id}', [UserController::class, 'show']);
+        Route::put('/{id}', [UserController::class, 'update']);
 
     });
-    Route::prefix('status')->group(function(){
+    Route::prefix('/status')->group(function(){
+        Route::get('/', [StatusController::class, 'index']);
         Route::get('/{id}', [StatusController::class, 'show']);
+        Route::post('/create', [StatusController::class, 'store']);
+        Route::put('/{id}', [StatusController::class, 'update']);
+        Route::delete('/{id}', [StatusController::class, 'destroy']);
+    });
+    Route::prefix('/field')->group(function(){
+        Route::get('/', [FieldController::class, 'index']);
+        Route::get('/{id}', [FieldController::class, 'show']);
+        Route::post('/create', [FieldController::class, 'store']);
+        Route::put('/{id}', [FieldController::class, 'update']);
+        Route::delete('/{id}', [FieldController::class, 'destroy']);
+    });
+    Route::prefix('/rental')->group(function(){
+        Route::get('/', [RentalFileController::class, 'index']);
+        Route::get('/{id}', [RentalFileController::class, 'show']);
+        Route::post('/create', [RentalFileController::class, 'store']);
+        Route::put('/{id}', [RentalFileController::class, 'update']);
+        Route::delete('/{id}', [RentalFileController::class, 'destroy']);
     });
 });
