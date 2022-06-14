@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RentalFile;
 use Illuminate\Http\Request;
 
 class RentalFileController extends Controller
@@ -13,7 +14,12 @@ class RentalFileController extends Controller
      */
     public function index()
     {
-        //
+        $rental_files = RentalFile::all();
+
+        return response()->json([
+            'success' => true,
+            'data' => $rental_files
+        ]);
     }
 
     /**
@@ -24,7 +30,23 @@ class RentalFileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'url' => 'string',
+            'title' => 'string',
+            'agency' => 'string',
+            'description' => 'string',
+            'city' => 'string',
+            'price' => 'string',
+            'images_url' => 'string',
+            'status_id' => 'string'
+        ]);
+
+        $rental_file = new RentalFile($request->all());
+
+        return response()->json([
+            'success' => true,
+            'data' => $rental_file
+        ]);
     }
 
     /**
@@ -35,7 +57,19 @@ class RentalFileController extends Controller
      */
     public function show($id)
     {
-        //
+        $rental_file = RentalFile::find($id);
+
+        if(!$rental_file){
+            return response()->json([
+                'success' => false
+            ], 404);
+        }
+        else{
+            return response()->json([
+                'success' => true,
+                'data' => $rental_file
+            ], 200);
+        }
     }
 
     /**
@@ -47,7 +81,31 @@ class RentalFileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'url' => 'string',
+            'title' => 'string',
+            'agency' => 'string',
+            'description' => 'string',
+            'city' => 'string',
+            'price' => 'string',
+            'images_url' => 'string',
+            'status_id' => 'string'
+        ]);
+
+        $rental_file = RentalFile::find($id);
+
+        if($rental_file){
+            $rental_file->fill($request->all())->save(); // voir si ça fonctionne
+            return response()->json([
+                'success' => true,
+                'data' => $rental_file
+            ]);
+        }
+        else{
+            return response()->json([
+                'success' => false
+            ], 404);
+        }
     }
 
     /**
@@ -58,6 +116,15 @@ class RentalFileController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $rental_file = RentalFile::find($id);
+        if($rental_file){
+            $rental_file->destroy();
+            return response()->json([], 204);
+        }
+        else{
+            return response()->json([
+                'success' => false
+            ], 404);
+        }
     }
 }

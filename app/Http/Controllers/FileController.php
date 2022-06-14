@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\File;
 use Illuminate\Http\Request;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class FileController extends Controller
 {
@@ -13,7 +15,11 @@ class FileController extends Controller
      */
     public function index()
     {
-        
+        $files = File::all();
+        return response()->json([
+            'success' => true,
+            'data' => $files
+        ]);
     }
 
     /**

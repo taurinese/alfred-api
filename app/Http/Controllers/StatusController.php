@@ -30,7 +30,18 @@ class StatusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'string'
+        ]);
+
+        $status = new Status([
+            'name' => $request->name
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'status' => $status
+        ]);
     }
 
     /**
@@ -41,7 +52,20 @@ class StatusController extends Controller
      */
     public function show($id)
     {
-        //
+        $status = Status::find($id);
+
+        if(!$status){
+            return response()->json([
+                'success' => false
+            ], 404);
+        }
+        else{
+            return response()->json([
+                'success' => true,
+                'status' => $status
+            ], 200);
+        }
+
     }
 
     /**
@@ -53,7 +77,25 @@ class StatusController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'string'
+        ]);
+
+        $status = Status::find($id);
+
+        if($status){
+            $status->name = $request->name;
+            $status->save();
+            return response()->json([
+                'success' => true,
+                'status' => $status
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'success' => false
+            ], 404);
+        }
     }
 
     /**
@@ -64,6 +106,15 @@ class StatusController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $status = Status::find($id);
+        if($status){
+            $status->destroy();
+            return response()->json([], 204);
+        }
+        else{
+            return response()->json([
+                'success' => false
+            ], 404);
+        }
     }
 }

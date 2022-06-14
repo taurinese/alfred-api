@@ -55,15 +55,29 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Validation
-        /* $request->validate([
-
-        ]); */
-        // Changement des data
-
+        // Validation TODO: vérifier ce qu'il autoriser à update
+        $request->validate([
+            'first_name' => 'string',
+            'last_name' => 'string',
+            'email' => 'email',
+            'birthday' => 'date',
+            'status_id' => 'integer'
+        ]); 
         // Récupération du nouveau user
 
         $user = User::find($id);
+        if($user) {
+            $user->fill($request->all())->save();
+            return response()->json([
+                'success' => true,
+                'data' => $user
+            ]);
+        }
+        else{
+            return response()->json([
+                'success' => false
+            ], 404);
+        }
 
         // Retour
 
@@ -81,7 +95,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        if(User::exists($id)){
+        $user = User::find($id);
+        if($user){
+            $user->destroy();
             return response()->json([
                 'success' => true
             ]);

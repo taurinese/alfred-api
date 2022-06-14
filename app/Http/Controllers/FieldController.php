@@ -37,6 +37,8 @@ class FieldController extends Controller
         ]);
 
         $field = new Field();
+        $field->name = $request->name;
+        $field->save();
 
         return response()->json([
             'success' => true,
@@ -111,6 +113,7 @@ class FieldController extends Controller
             ], 404);
         }
         else{
+            $field->destroy();
             return response()->json([], 204);
         }
     }
