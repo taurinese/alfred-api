@@ -40,7 +40,7 @@ class StatusController extends Controller
 
         return response()->json([
             'success' => true,
-            'status' => $status
+            'data' => $status
         ]);
     }
 
@@ -62,7 +62,7 @@ class StatusController extends Controller
         else{
             return response()->json([
                 'success' => true,
-                'status' => $status
+                'data' => $status
             ], 200);
         }
 
@@ -88,7 +88,7 @@ class StatusController extends Controller
             $status->save();
             return response()->json([
                 'success' => true,
-                'status' => $status
+                'data' => $status
             ], 200);
         }
         else{

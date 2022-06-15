@@ -89,7 +89,7 @@ class RentalFileController extends Controller
             'city' => 'string',
             'price' => 'string',
             'images_url' => 'string',
-            'status_id' => 'string'
+            'status_id' => 'exists:statuses,id'
         ]);
 
         $rental_file = RentalFile::find($id);

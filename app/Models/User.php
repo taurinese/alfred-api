@@ -45,4 +45,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function guarantors()
+    {
+        return $this->hasMany(Guarantor::class);
+    }
+
+    public function files()
+    {
+        return $this->hasMany(File::class);
+    }
 }

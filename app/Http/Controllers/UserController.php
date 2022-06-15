@@ -38,7 +38,7 @@ class UserController extends Controller
         else{
             $response = [
                 'success' => true,
-                'user' => $user
+                'data' => $user
             ];
         }
 

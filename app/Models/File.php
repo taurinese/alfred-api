@@ -16,6 +16,7 @@ class File extends Model
         'path',
         'user_id',
         'guarantor_id',
-        'field_id'
+        'field_id',
+        'cloudinary_id'
     ];
 }

@@ -17,6 +17,7 @@ class CreateFilesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('path');
+            $table->string('cloudinary_id');
         });
     }
 

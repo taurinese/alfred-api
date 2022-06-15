@@ -20,7 +20,7 @@ class FieldController extends Controller
 
         return response()->json([
             "success" => true,
-            "fields" => $fields
+            "data" => $fields
         ]);
     }
 
@@ -42,7 +42,7 @@ class FieldController extends Controller
 
         return response()->json([
             'success' => true,
-            'field' => $field
+            'data' => $field
         ]);
     }
 
@@ -65,7 +65,7 @@ class FieldController extends Controller
         else{
             $response = [
                 'success' => true,
-                'field' => $field
+                'data' => $field
             ];
         }
 
@@ -93,7 +93,7 @@ class FieldController extends Controller
 
         return response()->json([
             'success' => true,
-            'field' => $field
+            'data' => $field
         ], 200);
     }
 

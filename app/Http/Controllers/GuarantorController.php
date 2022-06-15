@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\File;
+use App\Models\Guarantor;
 use Illuminate\Http\Request;
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
-class FileController extends Controller
+class GuarantorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +14,9 @@ class FileController extends Controller
      */
     public function index()
     {
-        $files = File::all();
-        return response()->json([
-            'success' => true,
-            'data' => $files
-        ]);
+        $guarantors = auth()->user()->guarantors();
+
+        
     }
 
     /**
@@ -30,11 +27,18 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        // Cloudinary::uploadFile($request->file('file')->getRealPath())->getSecurePath();
-        // OU
-        /* $result = $request->url_image->storeOnCloudinaryAs('posts', $image_name);
-        $post->url_image = $result->getPath();
-        $post->cloudinary_id = $result->getPublicId(); */
+        $request->validate([
+            'first_name' => 'string',
+            'last_name' => 'string',
+            'user_id' => 'exists:users,id'
+        ]);
+
+        $guarantor = new Guarantor($request->all());
+
+        return response()->json([
+            'success' => true,
+            'data' => $guarantor
+        ]);
     }
 
     /**
@@ -57,18 +61,7 @@ class FileController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        // Validation sur le nouveau fichier dans la request
-
-        // Vérifier que le fichier existe bien
-
-        // Supprimer le fichier de Cloudinary
-
-        // Upload le nouveau fichier 
-
-        // Update l'url dans la db
-
-
+        //
     }
 
     /**
