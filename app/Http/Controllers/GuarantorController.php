@@ -16,7 +16,10 @@ class GuarantorController extends Controller
     {
         $guarantors = auth()->user()->guarantors();
 
-        
+        return response()->json([
+            'success' => true,
+            'data' => $guarantors
+        ]);
     }
 
     /**
@@ -49,7 +52,19 @@ class GuarantorController extends Controller
      */
     public function show($id)
     {
-        //
+        $guarantor = Guarantor::find($id);
+
+        if($guarantor){
+            return response()->json([
+                'success' => true,
+                'data' => $guarantor
+            ]);
+        }
+        else{
+            return response()->json([
+                'success' => false
+            ], 404);
+        }
     }
 
     /**
@@ -61,7 +76,25 @@ class GuarantorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'first_name' => 'string',
+            'last_name' => 'string',
+        ]);
+
+        $guarantor = Guarantor::find($id);
+
+        if($guarantor){
+            $guarantor->fill($request->all())->save();
+            return response()->json([
+                'success' => true,
+                'data' => $guarantor
+            ]);
+        }
+        else{
+            return response()->json([
+                'success' => false
+            ]);
+        }
     }
 
     /**
@@ -72,6 +105,20 @@ class GuarantorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $guarantor = Guarantor::find($id);
+
+        if($guarantor){
+            $files = $guarantor->files();
+            foreach($files as $file){
+                cloudinary()->uploadApi()->destroy($file->cloudinary_id);
+            }
+            $guarantor->destroy();
+            return response()->json([], 204);
+        }
+        else{
+            return response()->json([
+                'success' => false
+            ], 404);
+        }
     }
 }

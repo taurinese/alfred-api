@@ -14,4 +14,9 @@ class Guarantor extends Model
         'last_name',
         'user_id'
     ];
+
+    public function files()
+    {
+        return $this->hasMany(File::class);
+    }
 }
