@@ -41,7 +41,7 @@ class FileController extends Controller
         // OU
         // dd($request->file(), $request->all());
         $file = new File();
-        $result = $request->document->storeOnCloudinaryAs('files', 'test');
+        $result = $request->file('document')->storeOnCloudinaryAs('files', 'test');
         $file->path = $result->getPath();
         $file->cloudinary_id = $result->getPublicId();
         $file->field_id = $request->field_id;
