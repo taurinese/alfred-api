@@ -54,7 +54,7 @@ class FileController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $file
+            // 'data' => $file
         ]);
     }
 
