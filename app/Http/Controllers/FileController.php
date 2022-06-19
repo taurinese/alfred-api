@@ -30,19 +30,31 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'file' => ''
-        // ]);
+        $request->validate([
+            'file' => 'file|mimes:jpg,png,bmp,pdf'
+        ]);
+
+
+        
 
         // Cloudinary::uploadFile($request->file('file')->getRealPath())->getSecurePath();
         // OU
-        /* $result = $request->url_image->storeOnCloudinaryAs('posts', $image_name);
-        $post->url_image = $result->getPath();
-        $post->cloudinary_id = $result->getPublicId(); */
+        $file = new File();
+        $result = $request->url_image->storeOnCloudinaryAs('files', $request->file->getClientOriginalName());
+        $file->path = $result->getPath();
+        $file->cloudinary_id = $result->getPublicId();
+        $file->field_id = $request->field_id;
+        if($request->guarantor_id){
+            $file->guarantor_id = $request->guarantor_id;
+        }
+        else{
+            $file->user_id = auth()->id();
+        }
+        $file->save();
 
         return response()->json([
             'success' => true,
-            'data' => $request->all()
+            'data' => $file
         ]);
     }
 
