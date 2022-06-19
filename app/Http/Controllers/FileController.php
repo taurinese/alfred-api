@@ -40,7 +40,7 @@ class FileController extends Controller
         // Cloudinary::uploadFile($request->file('file')->getRealPath())->getSecurePath();
         // OU
         $file = new File();
-        $result = $request->url_image->storeOnCloudinaryAs('files', $request->file->getClientOriginalName());
+        $result = $request->file->storeOnCloudinaryAs('files', $request->file->getClientOriginalName());
         $file->path = $result->getPath();
         $file->cloudinary_id = $result->getPublicId();
         $file->field_id = $request->field_id;
