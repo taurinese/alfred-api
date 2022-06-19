@@ -30,6 +30,9 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'file' => ''
+        ]);
         // Cloudinary::uploadFile($request->file('file')->getRealPath())->getSecurePath();
         // OU
         /* $result = $request->url_image->storeOnCloudinaryAs('posts', $image_name);
@@ -45,7 +48,19 @@ class FileController extends Controller
      */
     public function show($id)
     {
-        //
+        $file = File::find($id);
+
+        if($file){
+            return response()->json([
+                'success' => true,
+                'data' => $file
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'success' => false
+            ], 404);
+        }
     }
 
     /**

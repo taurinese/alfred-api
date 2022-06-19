@@ -28,7 +28,7 @@ Route::post('/auth/register', [ApiTokenController::class, 'register']);
 // });
 
 Route::middleware('auth:sanctum')->group(function(){
-    Route::prefix('/user')->group(function(){
+    Route::prefix('/users')->group(function(){
         Route::delete('/delete/{id}', [UserController::class, 'destroy']);
         Route::get('/{id}', [UserController::class, 'show']);
         Route::put('/{id}', [UserController::class, 'update']);
@@ -41,7 +41,7 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::put('/{id}', [StatusController::class, 'update']);
         Route::delete('/{id}', [StatusController::class, 'destroy']);
     });
-    Route::prefix('/field')->group(function(){
+    Route::prefix('/fields')->group(function(){
         Route::get('/', [FieldController::class, 'index']);
         Route::get('/{id}', [FieldController::class, 'show']);
         Route::post('/create', [FieldController::class, 'store']);
@@ -55,7 +55,7 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::put('/{id}', [RentalFileController::class, 'update']);
         Route::delete('/{id}', [RentalFileController::class, 'destroy']);
     });
-    Route::prefix('/file')->group(function(){
+    Route::prefix('/files')->group(function(){
         Route::get('/', [FileController::class, 'index']);
         Route::get('/{id}', [FileController::class, 'show']);
         Route::post('/create', [FileController::class, 'store']);
