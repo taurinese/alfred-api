@@ -40,6 +40,7 @@ class FileController extends Controller
         // Cloudinary::uploadFile($request->file('file')->getRealPath())->getSecurePath();
         // OU
         // dd($request->file(), $request->all());
+        dd($request->file('document'), $request->document);
         $file = new File();
         $result = $request->file('document')->storeOnCloudinaryAs('files', 'test');
         $file->path = $result->getPath();
@@ -53,7 +54,6 @@ class FileController extends Controller
         }
         $file->save();
 
-        dd($request->file('document'), $request->document);
         return response()->json([
             'success' => true,
             'data' => $file
