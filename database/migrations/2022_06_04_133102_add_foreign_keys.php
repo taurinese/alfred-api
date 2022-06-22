@@ -17,8 +17,8 @@ class AddForeignKeys extends Migration
             $table->foreignId('status_id')->constrained()->onDelete('cascade');
         });
         Schema::table('files', function($table) {
-            $table->foreignId('user_id')->constrained()->nullable()->onDelete('cascade');
-            $table->foreignId('guarantor_id')->constrained()->nullable()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('guarantor_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('field_id')->constrained()->onDelete('cascade');        
         });
         Schema::table('rental_files', function($table){

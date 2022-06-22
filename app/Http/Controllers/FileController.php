@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\File;
 use Illuminate\Http\Request;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Symfony\Component\Console\Input\Input;
 
 class FileController extends Controller
 {
@@ -30,19 +31,16 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        /* $request->validate([
-            'document' => 'file|mimes:jpg,png,bmp,pdf|required'
-        ]); */
+        // $request->validate([
+        //     'document' => 'file|mimes:jpg,png,bmp,pdf|required'
+        // ]);
 
 
         
 
-        // Cloudinary::uploadFile($request->file('file')->getRealPath())->getSecurePath();
-        // OU
-        // dd($request->file(), $request->all());
-        // dd($request->file('document'), $request->document);
         $file = new File();
-        $result = $request->document['uri']->storeOnCloudinaryAs('files', 'test');
+        $result = $request->document->storeOnCloudinary();
+        // $result = $request->document->storeOnCloudinaryAs('files', 'test');
         $file->path = $result->getPath();
         $file->cloudinary_id = $result->getPublicId();
         $file->field_id = $request->field_id;
