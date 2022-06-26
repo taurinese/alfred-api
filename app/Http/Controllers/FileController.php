@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Field;
 use App\Models\File;
 use Illuminate\Http\Request;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Symfony\Component\Console\Input\Input;
+use Illuminate\Support\Str;
 
 class FileController extends Controller
 {
@@ -39,8 +41,8 @@ class FileController extends Controller
         
 
         $file = new File();
-        $result = $request->document->storeOnCloudinary();
-        // $result = $request->document->storeOnCloudinaryAs('files', 'test');
+        // $result = $request->document->storeOnCloudinary();
+        $result = $request->document->storeOnCloudinaryAs(auth()->id(), auth()->id() . '_' . Str::slug(Field::find($request->field_id)->name, '_'));
         $file->path = $result->getPath();
         $file->cloudinary_id = $result->getPublicId();
         $file->field_id = $request->field_id;
@@ -112,6 +114,15 @@ class FileController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Vérifier si le fichier existe et qu'il appartient au user
+        $file = File::where('id', $id)->where('user_id', auth()->id())->first();
+        if($file){
+            Cloudinary::destroy($file->cloudinary_id);
+            $file->delete();
+            return response()->json([], 204);
+        }
+        else{
+            return response()->json(['success' => false], 404);
+        }
     }
 }
