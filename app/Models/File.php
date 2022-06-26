@@ -19,4 +19,10 @@ class File extends Model
         'field_id',
         'cloudinary_id'
     ];
+    protected $with = ['field'];
+
+    public function field()
+    {
+        return $this->belongsTo(Field::class);
+    }
 }
