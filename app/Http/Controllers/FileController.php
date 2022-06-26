@@ -16,7 +16,7 @@ class FileController extends Controller
      */
     public function index()
     {
-        $files = File::all();
+        $files = auth()->user()->files();
         return response()->json([
             'success' => true,
             'data' => $files
