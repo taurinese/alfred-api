@@ -104,6 +104,35 @@ class FileController extends Controller
         // Update l'url dans la db
 
 
+        $file = File::where('id', $id)->where('user_id', auth()->id())->first();
+        if($file){
+            Cloudinary::destroy($file->cloudinary_id);
+            $file->delete();
+            // return response()->json([], 204);
+
+            $newFile = new File();
+            // $result = $request->document->storeOnCloudinary();
+            $result = $request->document->storeOnCloudinaryAs(auth()->id(), auth()->id() . '_' . Str::slug(Field::find($request->field_id)->name, '_'));
+            $newFile->path = $result->getPath();
+            $newFile->cloudinary_id = $result->getPublicId();
+            $newFile->field_id = $request->field_id;
+            if($request->guarantor_id){
+                $newFile->guarantor_id = $request->guarantor_id;
+            }
+            else{
+                $newFile->user_id = auth()->id();
+            }
+            $newFile->save();
+
+            return response()->json([
+                'success' => true,
+                'data' => $newFile
+            ], 200);
+        }
+        else{
+            return response()->json(['success' => false], 404);
+        }
+
     }
 
     /**
