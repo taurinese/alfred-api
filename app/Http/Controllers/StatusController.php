@@ -31,11 +31,13 @@ class StatusController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'string'
+            'name' => 'string|required',
+            'type' => 'string|required'
         ]);
 
         $status = new Status([
-            'name' => $request->name
+            'name' => $request->name,
+            'type' => $request->type
         ]);
 
         return response()->json([
@@ -78,13 +80,15 @@ class StatusController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'string'
+            'name' => 'string',
+            'type' => 'string'
         ]);
 
         $status = Status::find($id);
 
         if($status){
-            $status->name = $request->name;
+            if($request->name) $status->name = $request->name;
+            if($request->type) $status->type = $request->type;
             $status->save();
             return response()->json([
                 'success' => true,
