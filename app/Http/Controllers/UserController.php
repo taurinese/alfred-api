@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Status;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -68,6 +69,8 @@ class UserController extends Controller
         $user = User::find($id);
         if($user) {
             $user->fill($request->all())->save();
+            $data = $user;
+            array_push($data,['status' => Status::find($user->status_id)->name]);
             return response()->json([
                 'success' => true,
                 'data' => $user
