@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/auth/login', [ApiTokenController::class, 'login']);
 Route::post('/auth/register', [ApiTokenController::class, 'register']);
+Route::get('/status', [StatusController::class, 'index']);
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
@@ -35,7 +36,6 @@ Route::middleware('auth:sanctum')->group(function(){
 
     });
     Route::prefix('/status')->group(function(){
-        Route::get('/', [StatusController::class, 'index']);
         Route::get('/{id}', [StatusController::class, 'show']);
         Route::post('/create', [StatusController::class, 'store']);
         Route::put('/{id}', [StatusController::class, 'update']);
