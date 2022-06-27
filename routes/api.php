@@ -23,8 +23,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('/auth/login', [ApiTokenController::class, 'login']);
 Route::post('/auth/register', [ApiTokenController::class, 'register']);
 Route::get('/status', [StatusController::class, 'index']);
-Route::get('/fields', [FieldController::class, 'index']);
-Route::get('/files', [FileController::class, 'index']);
+// Route::get('/fields', [FieldController::class, 'index']);
+// Route::get('/files', [FileController::class, 'index']);
 
 
 
@@ -46,7 +46,7 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::delete('/{id}', [StatusController::class, 'destroy']);
     });
     Route::prefix('/fields')->group(function(){
-        // Route::get('/', [FieldController::class, 'index']);
+        Route::get('/', [FieldController::class, 'index']);
         Route::get('/{id}', [FieldController::class, 'show']);
         Route::post('/create', [FieldController::class, 'store']);
         Route::put('/{id}', [FieldController::class, 'update']);
@@ -60,7 +60,7 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::delete('/{id}', [RentalFileController::class, 'destroy']);
     });
     Route::prefix('/files')->group(function(){
-        // Route::get('/', [FileController::class, 'index']);
+        Route::get('/', [FileController::class, 'index']);
         Route::get('/{id}', [FileController::class, 'show']);
         Route::post('/create', [FileController::class, 'store']);
         Route::put('/{id}', [FileController::class, 'update']);
