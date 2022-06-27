@@ -35,7 +35,7 @@ class ApiTokenController extends Controller
             'first_name' => $user->first_name,
             'last_name' => $user->last_name,
             'status' => Status::find($user->status_id)->name
-        ]);
+        ], 200);
     }
 
     public function register(Request $request)
@@ -80,7 +80,7 @@ class ApiTokenController extends Controller
             'first_name' => $user->first_name,
             'last_name' => $user->last_name,
             'status' => Status::find($user->status_id)->name
-        ]);
+        ], 201);
     }
     
 }
