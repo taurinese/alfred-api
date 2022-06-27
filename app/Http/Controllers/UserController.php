@@ -70,10 +70,11 @@ class UserController extends Controller
         if($user) {
             $user->fill($request->all())->save();
             $data = $user;
-            array_push($data,['status' => Status::find($user->status_id)->name]);
+            $data['status'] = Status::find($user->status_id)->name;
+            // array_push(['status' => Status::find($user->status_id)->name]);
             return response()->json([
                 'success' => true,
-                'data' => $user
+                'data' => $data
             ]);
         }
         else{
