@@ -28,7 +28,7 @@ Route::get('/status', [StatusController::class, 'index']);
 //     return $request->user();
 // });
 
-Route::middleware('auth:sanctum')->group(function(){
+Route::middleware('auth:api')->group(function(){
     Route::prefix('/users')->group(function(){
         Route::delete('/delete/{id}', [UserController::class, 'destroy']);
         Route::get('/{id}', [UserController::class, 'show']);
