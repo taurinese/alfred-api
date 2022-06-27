@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApiTokenController;
 use App\Http\Controllers\FieldController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\GuarantorController;
 use App\Http\Controllers\RentalFileController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\UserController;
@@ -65,5 +66,12 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::post('/create', [FileController::class, 'store']);
         Route::put('/{id}', [FileController::class, 'update']);
         Route::delete('/{id}', [FileController::class, 'destroy']);
+    });
+    Route::prefix('/guarantors')->group(function(){
+        Route::get('/', [GuarantorController::class, 'index']);
+        Route::get('/{id}', [GuarantorController::class, 'show']);
+        Route::post('/create', [GuarantorController::class, 'store']);
+        Route::put('/{id}', [GuarantorController::class, 'update']);
+        Route::delete('/{id}', [GuarantorController::class, 'destroy']);
     });
 });
