@@ -36,7 +36,11 @@ class GuarantorController extends Controller
             'user_id' => 'exists:users,id'
         ]);
 
-        $guarantor = new Guarantor($request->all());
+        $guarantor = Guarantor::create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'user_id' => $request->user_id,
+        ]);
         $guarantor->save();
 
         $data = [
