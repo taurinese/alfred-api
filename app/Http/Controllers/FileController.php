@@ -145,7 +145,9 @@ class FileController extends Controller
     public function destroy($id)
     {
         // Vérifier si le fichier existe et qu'il appartient au user
-        $file = File::where('id', $id)->where('user_id', auth()->id())->first();
+        $file = File::where('id', $id)->where('user_id', auth()->id());
+        $file = auth()->user()->guarantors ? $file->orWhere('guarantor_id', auth()->user()->guarantors)->first() : $file->first();
+        // dd($file);
         if($file){
             Cloudinary::destroy($file->cloudinary_id);
             $file->delete();
