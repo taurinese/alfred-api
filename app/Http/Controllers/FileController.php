@@ -42,7 +42,8 @@ class FileController extends Controller
 
         $file = new File();
         // $result = $request->document->storeOnCloudinary();
-        $result = $request->document->storeOnCloudinaryAs(auth()->id(), auth()->id() . '_' . Str::slug(Field::find($request->field_id)->name, '_'));
+        $folderName = $request->guarantor_id ? auth()->id() . '_guarantor' : auth()->id();
+        $result = $request->document->storeOnCloudinaryAs($folderName, auth()->id() . '_' . Str::slug(Field::find($request->field_id)->name, '_'));
         $file->path = $result->getPath();
         $file->cloudinary_id = $result->getPublicId();
         $file->field_id = $request->field_id;
