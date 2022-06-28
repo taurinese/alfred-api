@@ -24,7 +24,8 @@ class GuarantorController extends Controller
 
     public function getFiles()
     {
-        $guarantor = Guarantor::where('user_id', auth()->id())->first();
+        // $guarantor = Guarantor::where('user_id', auth()->id())->first();
+        $guarantor = auth()->user()->guarantors()->first();
 
         return response()->json([
             'success' => true,
