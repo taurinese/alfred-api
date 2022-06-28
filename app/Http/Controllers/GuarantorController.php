@@ -37,10 +37,18 @@ class GuarantorController extends Controller
         ]);
 
         $guarantor = new Guarantor($request->all());
+        $guarantor->save();
+
+        $data = [
+            'first_name' => $guarantor->first_name,
+            'last_name' => $guarantor->last_name,
+            'id' => $guarantor->id
+        ];
+
 
         return response()->json([
             'success' => true,
-            'data' => $guarantor
+            'data' => $data
         ]);
     }
 
