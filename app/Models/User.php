@@ -48,7 +48,7 @@ class User extends Authenticatable
 
     public function guarantors()
     {
-        return $this->hasMany(Guarantor::class);
+        return $this->hasOne(Guarantor::class);
     }
 
     public function files()

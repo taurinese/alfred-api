@@ -69,7 +69,7 @@ Route::middleware('auth:sanctum')->group(function(){
     });
     Route::prefix('/guarantors')->group(function(){
         Route::get('/', [GuarantorController::class, 'index']);
-        Route::get('/{id}', [GuarantorController::class, 'show']);
+        // Route::get('/{id}', [GuarantorController::class, 'show']);
         Route::get('/files', [GuarantorController::class, 'getFiles']);
         Route::post('/create', [GuarantorController::class, 'store']);
         Route::put('/{id}', [GuarantorController::class, 'update']);
