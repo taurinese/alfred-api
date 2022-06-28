@@ -14,11 +14,21 @@ class GuarantorController extends Controller
      */
     public function index()
     {
-        $guarantors = auth()->user()->guarantors();
+        $guarantors = auth()->user()->guarantors;
 
         return response()->json([
             'success' => true,
             'data' => $guarantors
+        ]);
+    }
+
+    public function getFiles()
+    {
+        $guarantor = Guarantor::where('user_id', auth()->id())->first();
+
+        return response()->json([
+            'success' => true,
+            'data' => $guarantor->files
         ]);
     }
 
