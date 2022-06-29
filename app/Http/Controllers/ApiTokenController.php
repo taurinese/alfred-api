@@ -70,10 +70,8 @@ class ApiTokenController extends Controller
         $request->setUserResolver(function () use ($user) {
             return $user;
         });
-        // dd($request->user());
 
         $user = User::find($user->id);
-        // dd($user);
         $token = $user->createToken($request->email)->plainTextToken;
 
         return response()->json([   

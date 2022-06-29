@@ -41,7 +41,6 @@ class FileController extends Controller
         
 
         $file = new File();
-        // $result = $request->document->storeOnCloudinary();
         $folderName = $request->guarantor_id ? auth()->id() . '_guarantor' : auth()->id();
         $result = $request->document->storeOnCloudinaryAs($folderName, auth()->id() . '_' . Str::slug(Field::find($request->field_id)->name, '_'));
         $file->path = $result->getPath();
@@ -94,16 +93,6 @@ class FileController extends Controller
     public function update(Request $request, $id)
     {
 
-        // Validation sur le nouveau fichier dans la request
-
-        // Vérifier que le fichier existe bien
-
-        // Supprimer le fichier de Cloudinary
-
-        // Upload le nouveau fichier 
-
-        // Update l'url dans la db
-
 
         $file = File::where('id', $id)->where('user_id', auth()->id())->first();
         if($file){
@@ -147,7 +136,6 @@ class FileController extends Controller
         // Vérifier si le fichier existe et qu'il appartient au user
         $file = File::where('id', $id)->where('user_id', auth()->id());
         $file = auth()->user()->guarantors ? $file->orWhere('guarantor_id', auth()->user()->guarantors->id)->first() : $file->first();
-        // dd($file);
         if($file){
             Cloudinary::destroy($file->cloudinary_id);
             $file->delete();
